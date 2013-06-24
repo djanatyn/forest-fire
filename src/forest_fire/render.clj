@@ -15,7 +15,7 @@
 
 (defn forest->image [forest]
   (let [height (count forest) width (count forest) image (new BufferedImage height width (. BufferedImage TYPE_INT_RGB))]
-    (set-color! image (fn [x y] (.getRGB (if (= (get-tile forest [x y]) :tree) (Color/green) (Color/white)))))
+    (set-color! image (fn [x y] (.getRGB (case (get-tile forest [x y]) :tree (Color/green) :empty (Color/white) :fire! (Color/red)))))
     image))
 
 (defn write-file [image filename]
