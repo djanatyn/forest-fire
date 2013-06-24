@@ -2,11 +2,6 @@
   (:use forest-fire.core)
   (:import java.awt.image.BufferedImage java.awt.Color java.io.File javax.imageio.ImageIO))
 
-(def *HEIGHT* 100)
-(def *WIDTH* 100)
-
-(def *image* (new BufferedImage *HEIGHT* *WIDTH* (. BufferedImage TYPE_INT_RGB)))
-
 (defn set-color!
   "iterates over an image with a function that takes coordinates and returns colors"
   [image color-chooser]
@@ -22,5 +17,7 @@
   (ImageIO/write image "png" (new File filename)))
 
 (defn -main [& args]
-  (set-color! *image* (fn [x y] -1))
-  (write-file *image* "white-square.png"))
+  (let [timeline (iterate tick (gen-forest 200 200))]
+    (doseq [n (range 20)] (write-file (forest->image (nth timeline n)) (str "out/gen" iteration ".png")))))
+
+

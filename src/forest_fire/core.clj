@@ -10,18 +10,17 @@
         height (count grid)]
     (and (>= x 0) (>= y 0) (< x width) (< y height))))
 
+(defn get-tile 
+  "return the value of a square on a grid"
+  [grid [x y]]
+  (nth (nth grid y) x))
+
 (defn neighbors
   "return the coordinates of all adjacent tiles"
   [grid [x y]]
   (let [delta-spaces [[-1 1] [0 1] [1 1] [-1 0] [1 0] [-1 -1] [0 -1] [1 -1]]
         surroundings (map #(map + [x y] %) delta-spaces)]
     (map #(get-tile grid %) (filter (partial valid? grid) surroundings))))
-
-
-(defn get-tile 
-  "return the value of a square on a grid"
-  [grid [x y]]
-  (nth (nth grid y) x))
 
 (defn coords
   "return all the possible coordinates with a certain width and height"
@@ -50,7 +49,7 @@
   (case (get-tile forest [x y])
     :empty :empty
     :fire  :empty
-    :tree (if ((set (neighbors forest [x y])) :fire) :fire (if (> 0.5 (rand)) :tree :fire))))
+    :tree (if ((set (neighbors forest [x y])) :fire) :fire (if (< 0.01 (rand)) :tree :fire))))
 
 (defn update-cell-in-grid [grids cell]
   "takes a map with an old grid and a new grid to update, and a cell to update, and updates that cell"
