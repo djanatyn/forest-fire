@@ -55,12 +55,10 @@
 (defn tick
   "return the successive forest"
   [forest]
-  (loop [new-forest (forest->vector forest)
-         old-forest forest
-         coords-left (coords (count (first forest)) (count forest))]
-    (let [current-coord (first coords-left)
-          tile (get-tile old-forest current-coord)]
-      (if (empty? coords-left) new-forest
-          (recur (assoc-in new-forest current-coord (update-cell old-forest current-coord))
-                 old-forest
-                 (rest coords-left))))))
+  (reduce update-cell-in-grid
+          (coords (count (first forest)) (count forest))
+          {:new (forest->vector forest) :old forest}))
+
+(defn update-cell-in-grid [grids cell]
+  "takes a map with an old grid and a new grid to update, and a cell to update, and updates that cell"
+  (assoc grids :new (assoc-in (:new grids) cell (update-cell (:old grids) cell))))
