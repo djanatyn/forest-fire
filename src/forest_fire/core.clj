@@ -38,7 +38,7 @@
 (defn gen-forest
   "generate a forest of specified width and height"
   [width height]
-  (repeatedly height (fn [] (repeatedly width #(if (> 0.5 (rand)) :tree :empty)))))
+  (repeatedly height (fn [] (repeatedly width #(if (> 0.3 (rand)) :tree :empty)))))
 
 (defn forest->vector
   "convert a forest to a vector for random access and assoc"
