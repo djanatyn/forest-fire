@@ -1,13 +1,3 @@
 # forest-fire
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
-
-## License
-
-Copyright © 2013 FIXME
-
-Distributed under the Eclipse Public License, the same as Clojure.
+A simple forest fire simulation, using the definition from [Wikipedia](http://en.wikipedia.org/wiki/Forest-fire_model).
