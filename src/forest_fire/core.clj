@@ -50,15 +50,15 @@
   (case (get-tile forest [x y])
     :empty :empty
     :fire  :empty
-    :tree (if ((set (neighbors forest [x y])) :fire) :fire :tree)))
+    :tree (if ((set (neighbors forest [x y])) :fire) :fire (if (> 0.5 (rand)) :tree :fire))))
+
+(defn update-cell-in-grid [grids cell]
+  "takes a map with an old grid and a new grid to update, and a cell to update, and updates that cell"
+  (assoc grids :new (assoc-in (:new grids) (reverse cell) (update-cell (:old grids) cell))))
 
 (defn tick
   "return the successive forest"
   [forest]
-  (reduce update-cell-in-grid
-          (coords (count (first forest)) (count forest))
-          {:new (forest->vector forest) :old forest}))
-
-(defn update-cell-in-grid [grids cell]
-  "takes a map with an old grid and a new grid to update, and a cell to update, and updates that cell"
-  (assoc grids :new (assoc-in (:new grids) cell (update-cell (:old grids) cell))))
+  (:new (reduce update-cell-in-grid
+           {:new (forest->vector forest) :old forest}
+           (coords (count (first forest)) (count forest)))))
