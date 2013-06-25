@@ -1,6 +1,7 @@
 (ns forest-fire.render
   (:use forest-fire.core)
-  (:import java.awt.image.BufferedImage java.awt.Color java.io.File javax.imageio.ImageIO))
+  (:import java.awt.image.BufferedImage java.awt.Color java.io.File javax.imageio.ImageIO)
+  (:gen-class))
 
 (defn set-color!
   "iterates over an image with a function that takes coordinates and returns colors"
@@ -17,7 +18,5 @@
   (ImageIO/write image "png" (new File filename)))
 
 (defn -main [& args]
-  (let [timeline (iterate tick (gen-forest 500 500))]
+  (let [timeline (iterate tick (gen-forest 100 100))]
     (doseq [n (range 50)] (write-file (forest->image (nth timeline n)) (str "out/gen" n ".png")))))
-
-

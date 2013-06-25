@@ -27,11 +27,6 @@
   [width height]
   (mapcat (fn [x] (map (fn [y] [x y]) (range height))) (range width)))
 
-(defn replace-tile
-  "replace a value on a grid with another and return the new grid"
-  [grid [x y] value]
-  (assoc grid y (assoc (nth grid y) x value)))
-
 ;; generate forest
 ;; ---------------
 
@@ -49,7 +44,7 @@
   (case (get-tile forest [x y])
     :empty :empty
     :fire  :empty
-    :tree (if ((set (neighbors forest [x y])) :fire) :fire (if (< 0.01 (rand)) :tree :fire))))
+    :tree (if ((set (neighbors forest [x y])) :fire) :fire (if (< 0.05 (rand)) :tree :fire))))
 
 (defn update-cell-in-grid [grids cell]
   "takes a map with an old grid and a new grid to update, and a cell to update, and updates that cell"
